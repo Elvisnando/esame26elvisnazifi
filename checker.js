@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 
 function check(url, invocationParameters,  expectedResultData, expectedResultStatus) {
 
-    url = url +"?"+"lato1="+invocationParameters.lato1+"&lato2="+invocationParameters.lato2+"="+expectedResultData;
+    url = url +'?'+'lato1='+invocationParameters.lato1+'&lato2='+invocationParameters.lato2+'='+expectedResultData;
 
     const checkResult = { // this is the object you need to set and return
         urlChecked: url,
@@ -20,7 +20,11 @@ return fetch(url)
     
     response.json().then(json => {
         checkResult.resultData = json;
-       console.log( compareResults(expectedResultData, checkResult.resultData));
+       if( compareResults(expectedResultData, checkResult.resultData)){
+           resultDataAsExpected = true;
+       } else {
+        resultDataAsExpected = false;
+       }
       
     });
   })
@@ -28,10 +32,7 @@ return fetch(url)
     console.log(error);
   });
 
-
-
-
-
+  return checkResult;
 
 
 }
