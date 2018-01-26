@@ -3,6 +3,8 @@ const fetch = require('node-fetch')
 
 function check(url, invocationParameters,  expectedResultData, expectedResultStatus) {
 
+    url = url +"?"+"lato1="+invocationParameters.lato1+"&lato2="+invocationParameters.lato2+"="+expectedResultData;
+
     const checkResult = { // this is the object you need to set and return
         urlChecked: url,
         resultData: null,
@@ -10,6 +12,25 @@ function check(url, invocationParameters,  expectedResultData, expectedResultSta
         statusTestPassed: null,
         resultDataAsExpected: null
     }
+
+    
+return fetch(url)
+  .then(response => {
+    checkResult.resultStatus =  response.status;
+    
+    response.json().then(json => {
+        checkResult.resultData = json;
+       console.log( compareResults(expectedResultData, checkResult.resultData));
+      
+    });
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+
+
+
 
 
 
